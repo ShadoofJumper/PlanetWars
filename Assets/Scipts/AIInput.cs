@@ -17,7 +17,6 @@ public class AIInput : IPlanetInput
 
     public void UpdateInput()
     {
-        Debug.Log("Update input ai");
     }
 
 }

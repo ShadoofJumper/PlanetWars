@@ -9,16 +9,23 @@ public class GravityBody : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private Vector3 startVelocity;
     [SerializeField] private bool isAffectByGravity;
-    public bool IsAffectByGravity => isAffectByGravity;
+    [SerializeField] private bool isAffectOther = true;
+
+    public bool IsAffectOther { get { return isAffectOther; } set { isAffectOther = value; } }
+    public bool IsAffectByGravity   => isAffectByGravity;
 
     private Vector3 currentVelocity;
     private Rigidbody rb;
+    private Rocket rocket;
 
 
     private void Awake()
     {
+        // add body to simulate system
+        GravitySimulator.instance.AddBodieToSystem(this);
+
         currentVelocity = startVelocity;
-        rb = GetComponent<Rigidbody>();
+        rb      = GetComponent<Rigidbody>();
         rb.mass = mass;
     }
 
@@ -28,15 +35,15 @@ public class GravityBody : MonoBehaviour
         //apply force of all bodies to this body
         foreach (var otherBody in otherBodies)
         {
-            if (otherBody != this)
+            if (otherBody != this && otherBody.IsAffectOther)
             {
                 Vector3 forceDir        = otherBody.transform.position - transform.position;
                 Vector3 normForceDir    = forceDir.normalized;
                 float sqrDistance       = forceDir.sqrMagnitude;
 
                 Vector3 force = normForceDir * GravitySimulator.instance.GlobalGravity * (mass * otherBody.mass) / sqrDistance;
-                Vector3 modifyForce = force + currentVelocity;
-                rb.AddForce(modifyForce);
+                //Vector3 modifyForce = force + currentVelocity; // 
+                rb.AddForce(force);
             }
         }
     }

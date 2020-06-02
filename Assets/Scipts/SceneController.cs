@@ -69,6 +69,12 @@ public class SceneController : MonoBehaviour
         {
             Planet newplanet = CreateRandomPlanet(plN);
             planets.Add(newplanet);
+            //disable player affect gravitation
+            if (plN == playerPlanetNumber)
+            {
+                newplanet.gameObject.GetComponent<GravityBody>().IsAffectOther = false;
+                Debug.Log("AAAAAAAAAAAAAAAAAAAAAA "+ newplanet.name);
+            }
         }
     }
 

@@ -25,9 +25,13 @@ public class GravitySimulator : MonoBehaviour
 
     [SerializeField] private float globalGravity;
     private float physicalTimeStep = 0.01f;
-    //open for test
-    public List<GravityBody> bodies = new List<GravityBody>();
+    private List<GravityBody> bodies = new List<GravityBody>();
     public float GlobalGravity => globalGravity;
+
+    public void AddBodieToSystem(GravityBody body)
+    {
+        bodies.Add(body);
+    }
 
     private void Awake()
     {
@@ -38,7 +42,7 @@ public class GravitySimulator : MonoBehaviour
     {
         for (int i = 0; i < bodies.Count; i++)
         {
-            if (bodies[i].IsAffectByGravity)
+            if (bodies[i].gameObject.activeSelf && bodies[i].IsAffectByGravity)
             {
                 bodies[i].UpdateBodyForce(bodies);
             }

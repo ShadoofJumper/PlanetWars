@@ -24,7 +24,6 @@ public class Planet : MonoBehaviour
     }
 
 
-
     public void InitializePlanet(float size, float distanceFromSun, float rotateSpeed, float startAngle, Sprite planetSprite)
     {
         this.size = size;

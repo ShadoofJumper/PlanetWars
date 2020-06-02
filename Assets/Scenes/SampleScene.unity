@@ -225,8 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b257a7f3b71b94ba48db83ae7efd36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalGravity: 0.06674
-  bodies: []
+  globalGravity: 1
 --- !u!114 &451900294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,24 +243,35 @@ MonoBehaviour:
   planetsFolder: {fileID: 1902201721}
   sprites:
   - {fileID: 21300000, guid: d1633d80f997845418c21db664ba138f, type: 3}
-  - {fileID: 21300000, guid: 8ff5851d96e353540b1e6d34f6dafe7b, type: 3}
-  - {fileID: 21300000, guid: ddc556a241acd514ba8409f6e064201c, type: 3}
+  - {fileID: 21300000, guid: 01e466e2fb6eea34ea00e20acc789c01, type: 3}
+  - {fileID: 21300000, guid: 0a73328190b6a1b4787cc6921bbe0f94, type: 3}
+  - {fileID: 21300000, guid: c37b6465dcc722340a3a437ce8dbbe96, type: 3}
+  - {fileID: 21300000, guid: 765aab9d7d5f75f478521312f0b8a3dd, type: 3}
+  - {fileID: 21300000, guid: 8d93f8b646fad08429a3686590a61bf7, type: 3}
+  - {fileID: 21300000, guid: c135213a5c54f2f4984eaa105cc33b20, type: 3}
   - {fileID: 21300000, guid: ef1bf2ecc16140f4195ed991ac4136c1, type: 3}
+  - {fileID: 21300000, guid: 0aab17f474ae0434eb7aff4a29cc0123, type: 3}
+  - {fileID: 21300000, guid: 709f6dc460a0f30408be2662721887c0, type: 3}
+  - {fileID: 21300000, guid: 8ff5851d96e353540b1e6d34f6dafe7b, type: 3}
   rockets:
   - {fileID: 6437783336836378771, guid: 357c16e778a25194cb4c894012e0e1e6, type: 3}
-  - {fileID: 6437783336836378771, guid: 96bfc37e2c8593243aded3802f07a3a1, type: 3}
-  - {fileID: 6437783336836378771, guid: 4c6bd0a283befcd47920bfa816f1c9e0, type: 3}
   planetNames:
   - Bobby
   - Monkey
   - Diablo
-  distanceBetweenSolarAxis: 1.274
-  planetsCount: 3
+  - Carlos
+  - Bamby
+  - Ihor
+  - Pizza
+  - Freska
+  - Macho
+  - Boom
+  distanceBetweenSolarAxis: 1
   planetMinSize: 0.5
   planetMaxSize: 0.6
-  planetMinSpeed: 15
-  planetMaxSpeed: 30
-  playerPlanetNumber: 0
+  planetMinSpeed: 0
+  planetMaxSpeed: 0
+  playerPlanetNumber: 4
   planetsHealth: 100
 --- !u!1 &534669902
 GameObject:
