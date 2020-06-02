@@ -9,6 +9,8 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float weight;
     [SerializeField] private float cooldown;
     [SerializeField] private float damage;
+
+    private float delayDestroy = 7.0f;
     private Rigidbody rockerRig;
     private float acceleration;
 
@@ -28,6 +30,21 @@ public class Rocket : MonoBehaviour
     private void FixedUpdate()
     {
         MoveRocket();
+    }
+    public void StartRocketMove()
+    {
+        StartCoroutine(DestroyRocketAfterTime(delayDestroy));
+    }
+
+    IEnumerator DestroyRocketAfterTime(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        // after time, if bullet actiove then destroy
+        if (gameObject.activeSelf)
+        {
+            //destroy bullet
+            OnRocketDestroy(this, gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

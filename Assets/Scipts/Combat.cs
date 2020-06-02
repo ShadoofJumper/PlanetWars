@@ -71,6 +71,8 @@ public class Combat : MonoBehaviour
     {
         Debug.Log("CreateRockets");
         Rocket newRocket = rocketPool.Count != 0 ? GetRocket() : CreateRocket();
+        newRocket.StartRocketMove();
+        newRocket.transform.rotation = Quaternion.Euler(planetInput.LookEulerAngle);
     }
 
     private Rocket CreateRocket()

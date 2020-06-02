@@ -32,7 +32,6 @@ public class SceneController : MonoBehaviour
     [SerializeField] private string[] planetNames;
     [Range(1.0f, 2.0f)]
     [SerializeField] private float  distanceBetweenSolarAxis = 1.0f;
-    [SerializeField] private int    planetsCount = 3;
     [SerializeField] private float  planetMinSize;
     [SerializeField] private float  planetMaxSize;
     [SerializeField] private float  planetMinSpeed;
@@ -66,7 +65,7 @@ public class SceneController : MonoBehaviour
 
     private void CreateAllPlanets()
     {
-        for (int plN = 0; plN < planetsCount; plN++)
+        for (int plN = 0; plN < planetNames.Length; plN++)
         {
             Planet newplanet = CreateRandomPlanet(plN);
             planets.Add(newplanet);

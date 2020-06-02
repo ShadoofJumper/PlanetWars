@@ -253,8 +253,10 @@ MonoBehaviour:
   - {fileID: 6437783336836378771, guid: 4c6bd0a283befcd47920bfa816f1c9e0, type: 3}
   planetNames:
   - Bobby
+  - Monkey
+  - Diablo
   distanceBetweenSolarAxis: 1.274
-  planetsCount: 1
+  planetsCount: 3
   planetMinSize: 0.5
   planetMaxSize: 0.6
   planetMinSpeed: 15
