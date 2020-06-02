@@ -8,7 +8,8 @@ public class GravityBody : MonoBehaviour
     [SerializeField] private float mass;
     [SerializeField] private float radius;
     [SerializeField] private Vector3 startVelocity;
-    [SerializeField] private bool isSun;
+    [SerializeField] private bool isAffectByGravity;
+    public bool IsAffectByGravity => isAffectByGravity;
 
     private Vector3 currentVelocity;
     private Rigidbody rb;

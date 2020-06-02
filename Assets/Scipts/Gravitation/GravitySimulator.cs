@@ -38,7 +38,10 @@ public class GravitySimulator : MonoBehaviour
     {
         for (int i = 0; i < bodies.Count; i++)
         {
-            bodies[i].UpdateBodyForce(bodies);
+            if (bodies[i].IsAffectByGravity)
+            {
+                bodies[i].UpdateBodyForce(bodies);
+            }
         }
     }
 
