@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalGravity: 1
+  distanceAffect: 1
 --- !u!114 &451900294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +255,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 709f6dc460a0f30408be2662721887c0, type: 3}
   - {fileID: 21300000, guid: 8ff5851d96e353540b1e6d34f6dafe7b, type: 3}
   rockets:
-  - {fileID: 6437783336836378771, guid: 357c16e778a25194cb4c894012e0e1e6, type: 3}
+  - {fileID: 4163155846191231014, guid: 357c16e778a25194cb4c894012e0e1e6, type: 3}
   planetNames:
   - Bobby
   - Monkey
@@ -266,12 +267,12 @@ MonoBehaviour:
   - Freska
   - Macho
   - Boom
-  distanceBetweenSolarAxis: 1
+  distanceBetweenSolarAxis: 1.137
   planetMinSize: 0.5
   planetMaxSize: 0.6
   planetMinSpeed: 0
   planetMaxSpeed: 0
-  playerPlanetNumber: 4
+  playerPlanetNumber: 0
   planetsHealth: 100
 --- !u!1 &534669902
 GameObject:

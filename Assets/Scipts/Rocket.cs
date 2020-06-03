@@ -10,7 +10,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float cooldown;
     [SerializeField] private float damage;
 
-    private float delayDestroy = 7.0f;
+    private float delayDestroy = 3.0f;
     private Rigidbody rockerRig;
     private float acceleration;
 
@@ -56,5 +56,6 @@ public class Rocket : MonoBehaviour
     private void MoveRocket()
     {
         rockerRig.MovePosition(rockerRig.position + transform.up * acceleration * Time.deltaTime);
+        Debug.DrawLine(transform.position, transform.position + transform.up * 3, Color.green);
     }
 }

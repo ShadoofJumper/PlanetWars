@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5147df9d793284a4fa868c63e113f955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 10
+  mass: 20
   radius: 1
   startVelocity: {x: 0, y: 0, z: 0}
   isAffectByGravity: 0

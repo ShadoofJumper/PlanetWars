@@ -30,6 +30,7 @@ public class GravityBody : MonoBehaviour
     }
 
 
+
     public void UpdateBodyForce(List<GravityBody> otherBodies)
     {
         //apply force of all bodies to this body
@@ -43,7 +44,11 @@ public class GravityBody : MonoBehaviour
 
                 Vector3 force = normForceDir * GravitySimulator.instance.GlobalGravity * (mass * otherBody.mass) / sqrDistance;
                 //Vector3 modifyForce = force + currentVelocity; // 
-                rb.AddForce(force);
+                if (forceDir.magnitude <= GravitySimulator.instance.DistanceAffect)
+                {
+                    rb.AddForce(force);
+                    Debug.Log("Affect from: " + otherBody.name);
+                }
             }
         }
     }

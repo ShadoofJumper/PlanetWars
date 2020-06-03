@@ -49,7 +49,10 @@ public class SceneController : MonoBehaviour
         FullSpritePool();
         //create sun
         sun = CreatePlanet(1.5f, 0, 5.0f, 0, sprites[0], "Sun");
-        CreateAllPlanets();
+                
+        planets.Add(CreatePlanet(1.0f, 2.0f, 0.0f, 0, sprites[1], "Test"));
+        planets.Add(CreatePlanet(1.0f, 8.0f, 0.0f, 0, sprites[2], "Test_2"));
+        //CreateAllPlanets();
         AddCombatToPlanets();
     }
 
