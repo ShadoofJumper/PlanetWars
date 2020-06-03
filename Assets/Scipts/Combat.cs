@@ -49,7 +49,8 @@ public class Combat : MonoBehaviour
 
     private void Update()
     {
-        RotateShooter(planetInput.LookEulerAngle);
+        if (planetInput!=null)
+            RotateShooter(planetInput.LookEulerAngle);
     }
 
     private void RotateShooter(Vector3 eulerAngle)
@@ -69,8 +70,6 @@ public class Combat : MonoBehaviour
 
     private void CreateRockets()
     {
-        Debug.Log("CreateRockets");
-        Debug.Log("CreateRockets: start angle:"+ planetInput.LookEulerAngle);
         Rocket newRocket = rocketPool.Count != 0 ? GetRocket() : CreateRocket();
         newRocket.StartRocketMove();
         newRocket.transform.rotation = Quaternion.Euler(planetInput.LookEulerAngle);
@@ -103,6 +102,8 @@ public class Combat : MonoBehaviour
         // get bullet
         rocketObject.SetActive(false);
         rocketObject.transform.position = Vector3.zero;
+        rocket.RockerRig.velocity           = Vector3.zero;
+        rocket.RockerRig.angularVelocity    = Vector3.zero;
         // add to pool when complete
         rocketPool.Enqueue(rocketObject);
     }

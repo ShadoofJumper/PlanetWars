@@ -24,12 +24,10 @@ public class GravitySimulator : MonoBehaviour
     #endregion
 
     [SerializeField] private float globalGravity;
-    [SerializeField] private float distanceAffect;
 
     private float physicalTimeStep = 0.01f;
     private List<GravityBody> bodies = new List<GravityBody>();
     public float GlobalGravity => globalGravity;
-    public float DistanceAffect => distanceAffect;
 
     public void AddBodieToSystem(GravityBody body)
     {

@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f65bcaae1914f047875f0eeb3f7c4de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startAcceleration: 3
+  startAcceleration: 6
   weight: 1
   cooldown: 1
   damage: 10
@@ -139,7 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 1
-  radius: 0.1
+  radiusGravityApply: 0
   startVelocity: {x: 0, y: 0, z: 0}
   isAffectByGravity: 1
   isAffectOther: 0
+  isSun: 0

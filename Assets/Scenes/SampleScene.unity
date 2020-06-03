@@ -226,7 +226,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalGravity: 1
-  distanceAffect: 1
 --- !u!114 &451900294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,13 +266,14 @@ MonoBehaviour:
   - Freska
   - Macho
   - Boom
-  distanceBetweenSolarAxis: 1.137
+  distanceBetweenSolarAxis: 1
   planetMinSize: 0.5
   planetMaxSize: 0.6
-  planetMinSpeed: 0
-  planetMaxSpeed: 0
-  playerPlanetNumber: 0
+  planetMinSpeed: 10
+  planetMaxSpeed: 45
+  playerPlanetNumber: 1
   planetsHealth: 100
+  planetsStandartMass: 20
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,8 +370,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomSpeed: 4
+  moveSpeed: 10
   minZoom: 1.2
-  maxZoom: 7
+  maxZoom: 14
 --- !u!1 &750739284
 GameObject:
   m_ObjectHideFlags: 0

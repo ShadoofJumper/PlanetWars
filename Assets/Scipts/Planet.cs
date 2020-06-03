@@ -14,6 +14,7 @@ public class Planet : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Combat planetCombat;
+    private GravityBody gravityBody;
     private IPlanetInput planetInput;
 
     public float Size => size;
@@ -21,6 +22,7 @@ public class Planet : MonoBehaviour
     private void Awake()
     {
         spriteRenderer  = GetComponent<SpriteRenderer>();
+        gravityBody     = GetComponent<GravityBody>();
     }
 
 
@@ -36,7 +38,6 @@ public class Planet : MonoBehaviour
 
     public void AddCombatController(int health, bool isPlayer, Rocket rocket)
     {
-        Debug.Log("AddCombatController");
         planetCombat = gameObject.AddComponent<Combat>();
         planetInput = isPlayer ? new PlayerInput(transform) as IPlanetInput: new AIInput();
         planetCombat.InitializePlanetCombat(planetInput, health, rocket, planetShootSpot);
@@ -48,6 +49,8 @@ public class Planet : MonoBehaviour
         transform.localScale        = Vector3.one * size;
         transform.position          = Vector3.up * distanceFromSun;
         spriteRenderer.sprite       = planetSprite;
+        gravityBody.RadiusGravityApply = size * 0.6f + size/3;
+        gravityBody.IsSun = isSun;
         //start rotate
         SetAngle(startAngle);
     }

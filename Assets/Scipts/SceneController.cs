@@ -38,6 +38,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] private float  planetMaxSpeed;
     [SerializeField] private int    playerPlanetNumber;
     [SerializeField] private int    planetsHealth = 100;
+    [SerializeField] private float  planetsStandartMass = 20.0f;
 
     private List<Sprite> spritesPool = new List<Sprite>();
     private List<Planet> planets = new List<Planet>();
@@ -48,12 +49,13 @@ public class SceneController : MonoBehaviour
     {
         FullSpritePool();
         //create sun
-        sun = CreatePlanet(1.5f, 0, 5.0f, 0, sprites[0], "Sun");
-                
-        planets.Add(CreatePlanet(1.0f, 2.0f, 0.0f, 0, sprites[1], "Test"));
-        planets.Add(CreatePlanet(1.0f, 8.0f, 0.0f, 0, sprites[2], "Test_2"));
-        //CreateAllPlanets();
+        sun = CreatePlanet(1.5f, 50.0f, 0, 5.0f, 0, sprites[0], "Sun");
+        //for test       
+        //planets.Add(CreatePlanet(0.5f, planetsStandartMass, 2.0f, 0.0f, 0, sprites[1], "Test"));
+        //planets.Add(CreatePlanet(1.3f, planetsStandartMass,  8.0f, 0.0f, 0, sprites[2], "Test_2"));
+        CreateAllPlanets();
         AddCombatToPlanets();
+
     }
 
     private void AddCombatToPlanets()
@@ -76,7 +78,6 @@ public class SceneController : MonoBehaviour
             if (plN == playerPlanetNumber)
             {
                 newplanet.gameObject.GetComponent<GravityBody>().IsAffectOther = false;
-                Debug.Log("AAAAAAAAAAAAAAAAAAAAAA "+ newplanet.name);
             }
         }
     }
@@ -84,17 +85,18 @@ public class SceneController : MonoBehaviour
     private Planet CreateRandomPlanet(int solarAxis)
     {
         float size              = Random.Range(planetMinSize, planetMaxSize);
+        float mass              = planetsStandartMass;
         float distanceFromSun   = distanceBetweenSolarAxis * (solarAxis + 1);
         float rotateSpeed       = Random.Range(planetMinSpeed, planetMaxSpeed);
         float startAngle        = Random.Range(10.0f, 250.0f);
         Sprite planetSprite     = GetRandomSprite();
         string planetName       = planetNames[solarAxis];
 
-        return CreatePlanet(size, distanceFromSun, rotateSpeed, startAngle, planetSprite, planetName);
+        return CreatePlanet(size, mass, distanceFromSun, rotateSpeed, startAngle, planetSprite, planetName);
     }
 
 
-    private Planet CreatePlanet(float size, float distanceFromSun, float rotateSpeed, float startAngle, Sprite planetSprite, string name)
+    private Planet CreatePlanet(float size, float mass, float distanceFromSun, float rotateSpeed, float startAngle, Sprite planetSprite, string name)
     {
         Planet newPlanet = Instantiate(planetPrefab, planetsFolder);
         newPlanet.InitializePlanet(size, distanceFromSun, rotateSpeed, startAngle, planetSprite);

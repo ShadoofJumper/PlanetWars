@@ -6,15 +6,17 @@ using UnityEngine;
 public class GravityBody : MonoBehaviour
 {
     [SerializeField] private float mass;
-    [SerializeField] private float radius;
+    [SerializeField] private float radiusGravityApply = 1.0f;
     [SerializeField] private Vector3 startVelocity;
     [SerializeField] private bool isAffectByGravity;
     [SerializeField] private bool isAffectOther = true;
+    [SerializeField] private bool isSun = false;
 
-    public bool IsAffectOther { get { return isAffectOther; } set { isAffectOther = value; } }
+    public float RadiusGravityApply { get { return radiusGravityApply; }    set { radiusGravityApply = value; } }
+    public bool IsAffectOther       { get { return isAffectOther; }         set { isAffectOther = value; } }
     public bool IsAffectByGravity   => isAffectByGravity;
+    public bool IsSun               { get { return isSun; } set { isSun = value; } }
 
-    private Vector3 currentVelocity;
     private Rigidbody rb;
     private Rocket rocket;
 
@@ -23,10 +25,14 @@ public class GravityBody : MonoBehaviour
     {
         // add body to simulate system
         GravitySimulator.instance.AddBodieToSystem(this);
-
-        currentVelocity = startVelocity;
         rb      = GetComponent<Rigidbody>();
         rb.mass = mass;
+    }
+
+    public void UpdateBodyMass(float mass)
+    {
+        this.mass   = mass;
+        rb.mass     = mass;
     }
 
 
@@ -43,14 +49,29 @@ public class GravityBody : MonoBehaviour
                 float sqrDistance       = forceDir.sqrMagnitude;
 
                 Vector3 force = normForceDir * GravitySimulator.instance.GlobalGravity * (mass * otherBody.mass) / sqrDistance;
-                //Vector3 modifyForce = force + currentVelocity; // 
-                if (forceDir.magnitude <= GravitySimulator.instance.DistanceAffect)
-                {
+
+                //force apply condition 
+                //if (otherBody.IsSun)
+                //{
+                    force = force / sqrDistance;
                     rb.AddForce(force);
-                    Debug.Log("Affect from: " + otherBody.name);
-                }
+                //}
+                //else
+                //{
+                    //if (forceDir.magnitude <= otherBody.radiusGravityApply)
+                    //{
+                        //rb.AddForce(force);
+                        //Debug.Log("Affect by: " + otherBody.name);
+                    //}
+                //}
             }
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, radiusGravityApply);
     }
 
 

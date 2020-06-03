@@ -16,6 +16,8 @@ public class Rocket : MonoBehaviour
 
     public float Acceleration   { get { return acceleration;  } set { acceleration = value; } }
     public float Cooldown       { get { return cooldown; } }
+    public Rigidbody RockerRig  { get { return rockerRig; } }
+
     public Action<Rocket, GameObject> OnRocketDestroy;
 
 

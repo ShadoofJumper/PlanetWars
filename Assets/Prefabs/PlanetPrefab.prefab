@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 20
-  radius: 1
+  radiusGravityApply: 1
   startVelocity: {x: 0, y: 0, z: 0}
   isAffectByGravity: 0
   isAffectOther: 1
