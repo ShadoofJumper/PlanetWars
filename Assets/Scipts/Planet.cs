@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class Planet : MonoBehaviour
 {
-    [SerializeField] Transform planetShootSpot;
+    [SerializeField] Transform  planetShootSpot;
+    [SerializeField] SpriteRenderer planetColorMark;
     private float   distanceFromSun;
     private Sprite  planetSprite;
     private float   rotateSpeed;
     private float   startAngle;
     private float   size;
     private bool    isSun;
+    private bool isPlayer;
 
-    private SpriteRenderer spriteRenderer;
-    private Combat planetCombat;
-    private GravityBody gravityBody;
-    private IPlanetInput planetInput;
+    private SpriteRenderer  spriteRenderer;
+    private Combat          planetCombat;
+    private GravityBody     gravityBody;
+    private IPlanetInput    planetInput;
 
-    public float    Size => size;
-    public bool     IsSun => isSun;
+    public float    Size        => size;
+    public bool     IsSun       => isSun;
+    public bool     IsPlayer    => isPlayer;
+    public float    RotateSpeed { get { return rotateSpeed; } set { rotateSpeed = value; } }
 
     private void Awake()
     {
@@ -39,9 +43,15 @@ public class Planet : MonoBehaviour
 
     public void AddCombatController(int health, bool isPlayer, Rocket rocket)
     {
-        planetCombat = gameObject.AddComponent<Combat>();
-        planetInput = isPlayer ? new PlayerInput(transform) as IPlanetInput: new AIInput(planetCombat);
+        this.isPlayer = isPlayer;
+        planetCombat    = gameObject.AddComponent<Combat>();
+        planetInput     = isPlayer ? new PlayerInput(transform) as IPlanetInput: new AIInput(planetCombat);
         planetCombat.InitializePlanetCombat(planetInput, health, rocket, planetShootSpot);
+        //set planet mark
+        planetColorMark.gameObject.SetActive(true);
+        Color markColor = isPlayer ? Color.green : Color.red;
+        markColor.a = 0.5f;
+        planetColorMark.color = markColor;
     }
 
     private void SetPlanetParametrs()
@@ -58,7 +68,7 @@ public class Planet : MonoBehaviour
 
     private void Update()
     {
-        if(planetInput!=null)
+        if(GameManager.instance.GameInProgress && planetInput !=null)
             planetInput.UpdateInput();
     }
 

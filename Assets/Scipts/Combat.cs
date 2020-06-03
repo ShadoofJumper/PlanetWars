@@ -36,8 +36,9 @@ public class Combat : MonoBehaviour
         health -= damage;
         if (health <= 0)
             Die();
-        Debug.Log($"TakeDamage: health {health}");
         planetUI.InfoBar.UpdateHP(health);
+        if (parentPlanet.IsPlayer)
+            UIManager.instance.UpdatePlayerHP(health);
     }
 
     private void Die()
@@ -45,6 +46,9 @@ public class Combat : MonoBehaviour
         GravitySimulator.instance.RemoveBodyFromSystem(gameObject);
         Destroy(gameObject);
         ScoreManager.instance.IncreaseScore();
+        GameManager.instance.CheckCompleteGame();
+        if (parentPlanet.IsPlayer)
+            GameManager.instance.FailGame();
     }
 
     private void SetUpCombat()
@@ -59,6 +63,8 @@ public class Combat : MonoBehaviour
         //create folder for rockets
         rocketsParent = new GameObject();
         rocketsParent.name = "Rockets from: " + gameObject.name;
+        if (parentPlanet.IsPlayer)
+            UIManager.instance.UpdatePlayerHP(health);
     }
 
     private void EnableShootSpot()
@@ -72,7 +78,22 @@ public class Combat : MonoBehaviour
     {
         if (planetInput!=null)
             RotateShooter(planetInput.LookEulerAngle);
-        //planetUI.InfoBar.UpdateCoolDown((int)Math.Round(timeToFire));
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        int cdSec = GetCDSeconds();
+        planetUI.InfoBar.UpdateCoolDown(cdSec);
+        if (parentPlanet.IsPlayer)
+            UIManager.instance.UpdatePlayerCD(cdSec);
+    }
+
+    private int GetCDSeconds()
+    {
+        float timeToShoot   = timeToFire - Time.time;
+        timeToShoot         = timeToShoot > 0 ? timeToShoot : 0;
+        return (int)Mathf.Round(timeToShoot);
     }
 
     private void RotateShooter(Vector3 eulerAngle)
@@ -124,7 +145,7 @@ public class Combat : MonoBehaviour
         // remove from queue
         // get bullet
         rocketObject.SetActive(false);
-        rocketObject.transform.position = Vector3.zero;
+        rocketObject.transform.position     = Vector3.zero;
         rocket.RockerRig.velocity           = Vector3.zero;
         rocket.RockerRig.angularVelocity    = Vector3.zero;
         // add to pool when complete

@@ -53,13 +53,13 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //destroy bullet
+        OnRocketDestroy(this, gameObject);
         Combat planetCombat = collision.collider.GetComponent<Combat>();
         if (planetCombat)
         {
             planetCombat.TakeDamage(damage);
         }
-        //destroy bullet
-        OnRocketDestroy(this, gameObject);
     }
 
     private void MoveRocket()

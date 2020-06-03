@@ -22,9 +22,22 @@ public class ScoreManager : MonoBehaviour
     }
     #endregion
     private int planetsDestroy;
+    private int startPlanetsInGame;
+
+    private void Start()
+    {
+        startPlanetsInGame = SceneController.instance.PlanetInGameCount;
+    }
+
+    public int GetAlivePlanets()
+    {
+        return startPlanetsInGame - planetsDestroy;
+    }
 
     public void IncreaseScore()
     {
         planetsDestroy++;
     }
+
+
 }

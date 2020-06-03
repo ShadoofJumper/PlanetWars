@@ -10,7 +10,7 @@ public class SceneController : MonoBehaviour
 
     public static SceneController instance;
 
-    private void SetupSinglton()
+    private void Awake()
     {
         if (instance == null)
         {
@@ -30,6 +30,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] private Sprite[] sprites;
     [SerializeField] private Rocket[] rockets;
     [SerializeField] private string[] planetNames;
+    [SerializeField] private int planetInGameCount;
     [Range(1.0f, 2.0f)]
     [SerializeField] private float  distanceBetweenSolarAxis = 1.0f;
     [SerializeField] private float  planetMinSize;
@@ -43,7 +44,9 @@ public class SceneController : MonoBehaviour
     private List<Sprite> spritesPool    = new List<Sprite>();
     private List<Planet> planets        = new List<Planet>();
     private Planet sun;
-    public Planet Sun => sun;
+    public Planet   Sun => sun;
+    public int      PlanetInGameCount => planetInGameCount;
+    public int      PlanetsHealth => planetsHealth;
 
     private void Start()
     {
@@ -55,7 +58,6 @@ public class SceneController : MonoBehaviour
         //planets.Add(CreatePlanet(1.3f, planetsStandartMass,  8.0f, 0.0f, 0, sprites[2], "Test_2"));
         CreateAllPlanets();
         AddCombatToPlanets();
-
     }
 
     private void AddCombatToPlanets()
@@ -67,10 +69,9 @@ public class SceneController : MonoBehaviour
         }
     }
 
-
     private void CreateAllPlanets()
     {
-        for (int plN = 0; plN < planetNames.Length; plN++)
+        for (int plN = 0; plN < planetInGameCount; plN++)
         {
             Planet newplanet = CreateRandomPlanet(plN);
             planets.Add(newplanet);

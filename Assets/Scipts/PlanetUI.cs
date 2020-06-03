@@ -7,20 +7,21 @@ public class PlanetUI : MonoBehaviour
     private Planet parentPlanet;
     private GameObject  uiInfoBarOrigin;
     private Transform   planetsUIFolder;
-    private GameObject  planeyUI;
+    private GameObject  planetUI;
     private InfoBar     infoBar;
 
     public InfoBar InfoBar => infoBar;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        parentPlanet    = GetComponent<Planet>();
+        parentPlanet = GetComponent<Planet>();
         uiInfoBarOrigin = UIManager.instance.UIInfoBarOrigin;
         planetsUIFolder = UIManager.instance.PlanetsUIFolder;
-        if(!parentPlanet.IsSun)
+        if (!parentPlanet.IsSun)
             CreatePlanetUI();
     }
+
 
     void Update()
     {
@@ -30,18 +31,19 @@ public class PlanetUI : MonoBehaviour
 
     private void CreatePlanetUI()
     {
-        planeyUI    = Instantiate(uiInfoBarOrigin, planetsUIFolder);
-        infoBar     = planeyUI.GetComponent<InfoBar>();
+        planetUI    = Instantiate(uiInfoBarOrigin, planetsUIFolder);
+        infoBar     = planetUI.GetComponent<InfoBar>();
+        infoBar.UpdateHP(SceneController.instance.PlanetsHealth);
     }
 
     private void UpdatePositionUI()
     {
-        planeyUI.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        planetUI.transform.position = Camera.main.WorldToScreenPoint(transform.position);
     }
 
     private void OnDestroy()
     {
-        Destroy(planeyUI);
+        Destroy(planetUI);
     }
 
 
