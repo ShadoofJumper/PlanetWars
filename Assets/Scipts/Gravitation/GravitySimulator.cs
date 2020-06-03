@@ -29,9 +29,15 @@ public class GravitySimulator : MonoBehaviour
     private List<GravityBody> bodies = new List<GravityBody>();
     public float GlobalGravity => globalGravity;
 
-    public void AddBodieToSystem(GravityBody body)
+    public void AddBodyToSystem(GravityBody body)
     {
         bodies.Add(body);
+    }
+
+    public void RemoveBodyFromSystem(GameObject bodyObject)
+    {
+        GravityBody body = bodyObject.GetComponent<GravityBody>();
+        bodies.Remove(body);
     }
 
     private void Awake()

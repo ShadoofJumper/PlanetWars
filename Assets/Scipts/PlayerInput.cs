@@ -23,10 +23,10 @@ public class PlayerInput : IPlanetInput
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0;
         Vector3 dirToMouse = Vector3.Normalize(mouseWorldPos - parent.position);
-        Debug.DrawLine(parent.position, parent.position + dirToMouse * 3, Color.red);
+        //Debug.DrawLine(parent.position, parent.position + dirToMouse * 3, Color.red);
         //Debug.DrawLine(parent.position, parent.position + Vector3.up * 3, Color.blue);
         lookEulerAngle.z = Vector3.SignedAngle(dirToMouse, Vector3.up, Vector3.back);
-        //shoot
+        // shoot
         if (Input.GetMouseButtonDown(0))
         {
             onShoot();

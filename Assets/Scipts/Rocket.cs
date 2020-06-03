@@ -8,12 +8,14 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float startAcceleration;
     [SerializeField] private float weight;
     [SerializeField] private float cooldown;
-    [SerializeField] private float damage;
+    [SerializeField] private int damage;
 
-    private float delayDestroy = 3.0f;
+    private float delayDestroy = 7.0f;
     private Rigidbody rockerRig;
     private float acceleration;
+    private Planet parentPlanet;
 
+    public Planet ParentPlanet  { get { return parentPlanet; } set { parentPlanet = value; } }
     public float Acceleration   { get { return acceleration;  } set { acceleration = value; } }
     public float Cooldown       { get { return cooldown; } }
     public Rigidbody RockerRig  { get { return rockerRig; } }
@@ -51,6 +53,11 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Combat planetCombat = collision.collider.GetComponent<Combat>();
+        if (planetCombat)
+        {
+            planetCombat.TakeDamage(damage);
+        }
         //destroy bullet
         OnRocketDestroy(this, gameObject);
     }

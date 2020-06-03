@@ -40,8 +40,8 @@ public class SceneController : MonoBehaviour
     [SerializeField] private int    planetsHealth = 100;
     [SerializeField] private float  planetsStandartMass = 20.0f;
 
-    private List<Sprite> spritesPool = new List<Sprite>();
-    private List<Planet> planets = new List<Planet>();
+    private List<Sprite> spritesPool    = new List<Sprite>();
+    private List<Planet> planets        = new List<Planet>();
     private Planet sun;
     public Planet Sun => sun;
 
@@ -74,11 +74,6 @@ public class SceneController : MonoBehaviour
         {
             Planet newplanet = CreateRandomPlanet(plN);
             planets.Add(newplanet);
-            //disable player affect gravitation
-            if (plN == playerPlanetNumber)
-            {
-                newplanet.gameObject.GetComponent<GravityBody>().IsAffectOther = false;
-            }
         }
     }
 

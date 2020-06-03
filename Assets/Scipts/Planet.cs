@@ -17,7 +17,8 @@ public class Planet : MonoBehaviour
     private GravityBody gravityBody;
     private IPlanetInput planetInput;
 
-    public float Size => size;
+    public float    Size => size;
+    public bool     IsSun => isSun;
 
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class Planet : MonoBehaviour
     public void AddCombatController(int health, bool isPlayer, Rocket rocket)
     {
         planetCombat = gameObject.AddComponent<Combat>();
-        planetInput = isPlayer ? new PlayerInput(transform) as IPlanetInput: new AIInput();
+        planetInput = isPlayer ? new PlayerInput(transform) as IPlanetInput: new AIInput(planetCombat);
         planetCombat.InitializePlanetCombat(planetInput, health, rocket, planetShootSpot);
     }
 

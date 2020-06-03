@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,10 +13,13 @@ public class Combat : MonoBehaviour
     private Transform   shootSpot;
     private Transform   shootSpotRotateParent;
     private Planet      parentPlanet;
+    private PlanetUI    planetUI;
 
     private Queue<GameObject> rocketPool = new Queue<GameObject>();
     private int rocketPoolCounter;
     private GameObject rocketsParent;
+
+    public float TimeToFire => timeToFire;
 
     public void InitializePlanetCombat(IPlanetInput planetInput, int health, Rocket originRocket, Transform shootSpot)
     {
@@ -27,13 +31,30 @@ public class Combat : MonoBehaviour
         SetUpCombat();
     }
 
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+            Die();
+        Debug.Log($"TakeDamage: health {health}");
+        planetUI.InfoBar.UpdateHP(health);
+    }
+
+    private void Die()
+    {
+        GravitySimulator.instance.RemoveBodyFromSystem(gameObject);
+        Destroy(gameObject);
+        ScoreManager.instance.IncreaseScore();
+    }
+
     private void SetUpCombat()
     {
         // call shoot from input
         planetInput.OnShoot = Shoot;
         // get components
         shootSpotRotateParent = shootSpot.GetComponentInParent<Transform>();
-        parentPlanet = gameObject.GetComponent<Planet>();
+        parentPlanet    = gameObject.GetComponent<Planet>();
+        planetUI        = gameObject.GetComponent<PlanetUI>();
         EnableShootSpot();
         //create folder for rockets
         rocketsParent = new GameObject();
@@ -42,7 +63,7 @@ public class Combat : MonoBehaviour
 
     private void EnableShootSpot()
     {
-        float distFromPlanet = parentPlanet.Size + 0.75f;
+        float distFromPlanet = 0.75f;
         shootSpot.gameObject.SetActive(true);
         shootSpot.localPosition = Vector3.up * distFromPlanet;
     }
@@ -51,6 +72,7 @@ public class Combat : MonoBehaviour
     {
         if (planetInput!=null)
             RotateShooter(planetInput.LookEulerAngle);
+        //planetUI.InfoBar.UpdateCoolDown((int)Math.Round(timeToFire));
     }
 
     private void RotateShooter(Vector3 eulerAngle)
@@ -72,7 +94,8 @@ public class Combat : MonoBehaviour
     {
         Rocket newRocket = rocketPool.Count != 0 ? GetRocket() : CreateRocket();
         newRocket.StartRocketMove();
-        newRocket.transform.rotation = Quaternion.Euler(planetInput.LookEulerAngle);
+        newRocket.ParentPlanet          = parentPlanet;
+        newRocket.transform.rotation    = Quaternion.Euler(planetInput.LookEulerAngle);
     }
 
     private Rocket CreateRocket()

@@ -9,11 +9,9 @@ public class GravityBody : MonoBehaviour
     [SerializeField] private float radiusGravityApply = 1.0f;
     [SerializeField] private Vector3 startVelocity;
     [SerializeField] private bool isAffectByGravity;
-    [SerializeField] private bool isAffectOther = true;
     [SerializeField] private bool isSun = false;
 
     public float RadiusGravityApply { get { return radiusGravityApply; }    set { radiusGravityApply = value; } }
-    public bool IsAffectOther       { get { return isAffectOther; }         set { isAffectOther = value; } }
     public bool IsAffectByGravity   => isAffectByGravity;
     public bool IsSun               { get { return isSun; } set { isSun = value; } }
 
@@ -24,8 +22,9 @@ public class GravityBody : MonoBehaviour
     private void Awake()
     {
         // add body to simulate system
-        GravitySimulator.instance.AddBodieToSystem(this);
+        GravitySimulator.instance.AddBodyToSystem(this);
         rb      = GetComponent<Rigidbody>();
+        rocket  = GetComponent<Rocket>();
         rb.mass = mass;
     }
 
@@ -42,7 +41,7 @@ public class GravityBody : MonoBehaviour
         //apply force of all bodies to this body
         foreach (var otherBody in otherBodies)
         {
-            if (otherBody != this && otherBody.IsAffectOther)
+            if (otherBody != this && !IsBodyParent(otherBody))//here need condition
             {
                 Vector3 forceDir        = otherBody.transform.position - transform.position;
                 Vector3 normForceDir    = forceDir.normalized;
@@ -66,6 +65,20 @@ public class GravityBody : MonoBehaviour
                 //}
             }
         }
+    }
+
+
+    private bool IsBodyParent(GravityBody otherBody)
+    {
+        //check if this body rocket and other body rocket parent
+        Planet otherBodyPlanet = otherBody.GetComponent<Planet>();
+        if (rocket != null 
+            && otherBodyPlanet != null 
+            && rocket.ParentPlanet == otherBodyPlanet)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void OnDrawGizmosSelected()
