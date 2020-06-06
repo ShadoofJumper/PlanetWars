@@ -5,29 +5,30 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    [SerializeField] private float startAcceleration;
-    [SerializeField] private float weight;
-    [SerializeField] private float cooldown;
-    [SerializeField] private int damage;
+    [SerializeField] private float      startAcceleration;
+    [SerializeField] private float      weight;
+    [SerializeField] private float      cooldown;
+    [SerializeField] private int        damage;
+    [SerializeField] private RocketType rocketType;
 
-    private float delayDestroy = 7.0f;
-    private Rigidbody rockerRig;
-    private float acceleration;
-    private Planet parentPlanet;
+    private float       delayDestroy = 7.0f;
+    private Rigidbody   rocketRig;
+    private float       acceleration;
+    private Planet      parentPlanet;
 
-    public Planet ParentPlanet  { get { return parentPlanet; } set { parentPlanet = value; } }
-    public float Acceleration   { get { return acceleration;  } set { acceleration = value; } }
-    public float Cooldown       { get { return cooldown; } }
-    public Rigidbody RockerRig  { get { return rockerRig; } }
+    public Planet       ParentPlanet    { get { return parentPlanet; } set { parentPlanet = value; } }
+    public float        Acceleration    { get { return acceleration;  } set { acceleration = value; } }
+    public float        Cooldown        { get { return cooldown; } }
+    public Rigidbody    RocketRig       { get { return rocketRig; } }
+    public RocketType   RocketParamType { get { return rocketType; } }
 
     public Action<Rocket, GameObject> OnRocketDestroy;
 
-
     private void Awake()
     {
-        rockerRig       = GetComponent<Rigidbody>();
+        rocketRig       = GetComponent<Rigidbody>();
         acceleration    = startAcceleration;
-        rockerRig.mass  = weight;
+        rocketRig.mass  = weight;
     }
 
 
@@ -64,7 +65,9 @@ public class Rocket : MonoBehaviour
 
     private void MoveRocket()
     {
-        rockerRig.MovePosition(rockerRig.position + transform.up * acceleration * Time.deltaTime);
+        rocketRig.MovePosition(rocketRig.position + transform.up * acceleration * Time.deltaTime);
         Debug.DrawLine(transform.position, transform.position + transform.up * 3, Color.green);
     }
 }
+
+

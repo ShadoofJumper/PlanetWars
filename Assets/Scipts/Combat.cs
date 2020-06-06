@@ -15,9 +15,12 @@ public class Combat : MonoBehaviour
     private Planet      parentPlanet;
     private PlanetUI    planetUI;
 
-    private Queue<GameObject> rocketPool = new Queue<GameObject>();
-    private int rocketPoolCounter;
-    private GameObject rocketsParent;
+    private static Queue<GameObject> rocketBluePool     = new Queue<GameObject>();
+    private static Queue<GameObject> rocketGreenPool    = new Queue<GameObject>();
+    private static Queue<GameObject> rocketYellowPool   = new Queue<GameObject>();
+    private static int rocketPoolCounter;
+    private Queue<GameObject> currentPool;
+    
 
     public float TimeToFire => timeToFire;
 
@@ -60,11 +63,26 @@ public class Combat : MonoBehaviour
         parentPlanet    = gameObject.GetComponent<Planet>();
         planetUI        = gameObject.GetComponent<PlanetUI>();
         EnableShootSpot();
-        //create folder for rockets
-        rocketsParent = new GameObject();
-        rocketsParent.name = "Rockets from: " + gameObject.name;
+        SetRocketPool(originRocket.RocketParamType);
+
         if (parentPlanet.IsPlayer)
             UIManager.instance.UpdatePlayerHP(health);
+    }
+
+    private void SetRocketPool(RocketType type)
+    {
+        switch (type)
+        {
+            case RocketType.Blue:
+                currentPool = rocketBluePool;
+                break;
+            case RocketType.Green:
+                currentPool = rocketGreenPool;
+                break;
+            case RocketType.Yellow:
+                currentPool = rocketYellowPool;
+                break;
+        }
     }
 
     private void EnableShootSpot()
@@ -113,7 +131,7 @@ public class Combat : MonoBehaviour
 
     private void CreateRockets()
     {
-        Rocket newRocket = rocketPool.Count != 0 ? GetRocket() : CreateRocket();
+        Rocket newRocket = currentPool.Count != 0 ? GetRocket() : CreateRocket();
         newRocket.StartRocketMove();
         newRocket.ParentPlanet          = parentPlanet;
         newRocket.transform.rotation    = Quaternion.Euler(planetInput.LookEulerAngle);
@@ -124,15 +142,15 @@ public class Combat : MonoBehaviour
         GameObject newRocketObject  = Instantiate(originRocket.gameObject, shootSpot.position, Quaternion.identity);
         Rocket newRocket            = newRocketObject.GetComponent<Rocket>();
         newRocket.OnRocketDestroy   = OnRocketDestroy;
-        newRocketObject.transform.SetParent(rocketsParent.transform);
-        newRocketObject.name = "Rocket_" + rocketPoolCounter;
+        newRocketObject.transform.SetParent(SceneController.instance.RocketsFolder);
+        newRocketObject.name = $"{originRocket.name}_{rocketPoolCounter}";
         rocketPoolCounter++;
         return newRocket;
     }
 
     private Rocket GetRocket()
     {
-        GameObject rocketGameObject         = rocketPool.Dequeue();
+        GameObject rocketGameObject         = currentPool.Dequeue();
         Rocket rocket                       = rocketGameObject.GetComponent<Rocket>();
         rocketGameObject.transform.position = shootSpot.position;
         rocketGameObject.SetActive(true);
@@ -146,9 +164,9 @@ public class Combat : MonoBehaviour
         // get bullet
         rocketObject.SetActive(false);
         rocketObject.transform.position     = Vector3.zero;
-        rocket.RockerRig.velocity           = Vector3.zero;
-        rocket.RockerRig.angularVelocity    = Vector3.zero;
+        rocket.RocketRig.velocity           = Vector3.zero;
+        rocket.RocketRig.angularVelocity    = Vector3.zero;
         // add to pool when complete
-        rocketPool.Enqueue(rocketObject);
+        currentPool.Enqueue(rocketObject);
     }
 }

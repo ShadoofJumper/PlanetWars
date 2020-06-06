@@ -130,6 +130,7 @@ MonoBehaviour:
   weight: 1.5
   cooldown: 0.2
   damage: 50
+  rocketType: 1
 --- !u!54 &1912566310238251363
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,7 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 1
-  radiusGravityApply: 0
   startVelocity: {x: 0, y: 0, z: 0}
   isAffectByGravity: 1
   isSun: 0

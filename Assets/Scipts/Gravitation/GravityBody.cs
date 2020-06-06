@@ -6,12 +6,10 @@ using UnityEngine;
 public class GravityBody : MonoBehaviour
 {
     [SerializeField] private float mass;
-    [SerializeField] private float radiusGravityApply = 1.0f;
     [SerializeField] private Vector3 startVelocity;
     [SerializeField] private bool isAffectByGravity;
     [SerializeField] private bool isSun = false;
 
-    public float RadiusGravityApply { get { return radiusGravityApply; }    set { radiusGravityApply = value; } }
     public bool IsAffectByGravity   => isAffectByGravity;
     public bool IsSun               { get { return isSun; } set { isSun = value; } }
 
@@ -47,22 +45,8 @@ public class GravityBody : MonoBehaviour
                 Vector3 normForceDir    = forceDir.normalized;
                 float sqrDistance       = forceDir.sqrMagnitude;
 
-                Vector3 force = normForceDir * GravitySimulator.instance.GlobalGravity * (mass * otherBody.mass) / sqrDistance;
-
-                //force apply condition 
-                //if (otherBody.IsSun)
-                //{
-                    force = force / sqrDistance;
-                    rb.AddForce(force);
-                //}
-                //else
-                //{
-                    //if (forceDir.magnitude <= otherBody.radiusGravityApply)
-                    //{
-                        //rb.AddForce(force);
-                        //Debug.Log("Affect by: " + otherBody.name);
-                    //}
-                //}
+                Vector3 force = normForceDir * GravitySimulator.instance.GlobalGravity * (mass * otherBody.mass) / Mathf.Pow(sqrDistance, 2);
+                rb.AddForce(force);
             }
         }
     }
@@ -80,13 +64,6 @@ public class GravityBody : MonoBehaviour
         }
         return false;
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radiusGravityApply);
-    }
-
 
 
 }

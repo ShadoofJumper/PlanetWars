@@ -26,6 +26,7 @@ public class SceneController : MonoBehaviour
 
     [SerializeField] private Planet     planetPrefab;
     [SerializeField] private Transform  planetsFolder;
+    [SerializeField] private Transform  rocketsFolder;
     //first element is sun spritee
     [SerializeField] private Sprite[] sprites;
     [SerializeField] private Rocket[] rockets;
@@ -44,9 +45,10 @@ public class SceneController : MonoBehaviour
     private List<Sprite> spritesPool    = new List<Sprite>();
     private List<Planet> planets        = new List<Planet>();
     private Planet sun;
-    public Planet   Sun => sun;
-    public int      PlanetInGameCount => planetInGameCount;
-    public int      PlanetsHealth => planetsHealth;
+    public Planet       Sun => sun;
+    public int          PlanetInGameCount => planetInGameCount;
+    public int          PlanetsHealth => planetsHealth;
+    public Transform    RocketsFolder => rocketsFolder;
 
     private void Start()
     {

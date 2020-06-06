@@ -60,7 +60,6 @@ public class Planet : MonoBehaviour
         transform.localScale        = Vector3.one * size;
         transform.position          = Vector3.up * distanceFromSun;
         spriteRenderer.sprite       = planetSprite;
-        gravityBody.RadiusGravityApply = size * 0.6f + size/3;
         gravityBody.IsSun = isSun;
         //start rotate
         SetAngle(startAngle);

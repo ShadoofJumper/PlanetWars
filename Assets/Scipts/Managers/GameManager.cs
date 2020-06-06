@@ -72,7 +72,6 @@ public class GameManager : MonoBehaviour
 
     public void CheckCompleteGame()
     {
-        Debug.Log("Alive: "+ ScoreManager.instance.GetAlivePlanets());
         if (ScoreManager.instance.GetAlivePlanets() == 1)
         {
             CompleteGame();
